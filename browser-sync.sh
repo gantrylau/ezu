@@ -1,0 +1,1 @@
+browser-sync start --files='src/**/*.css, src/**/*.jsp, src/**/*.html, src/**/*.js' --reload-delay='800' --proxy='localhost:8080'

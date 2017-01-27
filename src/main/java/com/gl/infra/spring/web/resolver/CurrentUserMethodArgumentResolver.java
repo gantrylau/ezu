@@ -1,0 +1,25 @@
+package com.gl.infra.spring.web.resolver;
+
+import org.springframework.core.MethodParameter;
+import org.springframework.web.bind.support.WebDataBinderFactory;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.method.support.ModelAndViewContainer;
+
+/**
+ * <p>用于绑定@CurrentUser的方法参数解析器</p>
+ *
+ * @author gantrylau
+ * @since 2015年09月13日
+ */
+public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentResolver {
+
+    public boolean supportsParameter(MethodParameter parameter) {
+        return parameter.hasParameterAnnotation(CurrentUser.class);
+    }
+
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        CurrentUser currentUserAnnotation = parameter.getParameterAnnotation(CurrentUser.class);
+        return webRequest.getAttribute(currentUserAnnotation.value(), NativeWebRequest.SCOPE_SESSION);
+    }
+}
