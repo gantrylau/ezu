@@ -1,13 +1,10 @@
 package com.gl.infra.spring.data.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.io.Serializable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 import org.springframework.data.domain.Persistable;
+
+import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author gantrylau
@@ -17,6 +14,7 @@ import org.springframework.data.domain.Persistable;
 public abstract class IdEntity<ID extends Serializable> implements Serializable, Persistable<ID> {
 
     private static final long serialVersionUID = 1805525954744391944L;
+
     protected ID id;
 
     @Id
