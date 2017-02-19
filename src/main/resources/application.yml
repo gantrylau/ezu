@@ -1,0 +1,10 @@
+db:
+  driverClass: com.mysql.jdbc.Driver
+  jdbcUrl: jdbc:mysql://192.168.33.10:3306/ezu?useUnicode=true&characterEncoding=UTF-8
+  username: root
+  password: 123456
+
+hibernate:
+  show_sql: true
+  format_sql: false
+  hbm2ddl.auto: update

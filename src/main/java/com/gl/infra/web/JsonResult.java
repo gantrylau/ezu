@@ -1,26 +1,40 @@
 package com.gl.infra.web;
 
+import org.springframework.data.domain.Page;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import org.springframework.data.domain.Page;
 
 /**
  * @author gantrylau
  * @since 2016年04月24日
  */
-public class GeneralResult implements Serializable {
+public class JsonResult implements Serializable {
 
     private static final long serialVersionUID = -7605177651903670948L;
 
     private Boolean success;
 
+    private String errorCode;
+
     private String errorMsg;
 
     private Object data;
 
-    public static GeneralResult success(Object object) {
-        GeneralResult result = new GeneralResult();
+    public static JsonResult build(Object object, BindingResult bindingResult) {
+        JsonResult result = new JsonResult();
+        if (bindingResult != null) {
+            if (bindingResult.getFieldErrorCount() > 0) {
+                result.setSuccess(false);
+                FieldError fieldError = bindingResult.getFieldError();
+                result.setErrorMsg(fieldError.getDefaultMessage());
+                return result;
+            }
+        }
+        result.setSuccess(true);
         if (object instanceof Page) {
             Page page = (Page) object;
             Map<String, Object> data = new HashMap<>();
@@ -33,16 +47,23 @@ public class GeneralResult implements Serializable {
         } else {
             result.setData(object);
         }
-        result.setSuccess(true);
         return result;
     }
 
-    public static GeneralResult success() {
-        return GeneralResult.success(null);
+    public static JsonResult build(BindingResult result) {
+        return build(null, result);
     }
 
-    public static GeneralResult error(String msg) {
-        GeneralResult result = new GeneralResult();
+    public static JsonResult success(Object object) {
+        return build(object, null);
+    }
+
+    public static JsonResult success() {
+        return JsonResult.success(null);
+    }
+
+    public static JsonResult error(String msg) {
+        JsonResult result = new JsonResult();
         result.setErrorMsg(msg);
         result.setSuccess(false);
         return result;
@@ -70,5 +91,13 @@ public class GeneralResult implements Serializable {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
     }
 }

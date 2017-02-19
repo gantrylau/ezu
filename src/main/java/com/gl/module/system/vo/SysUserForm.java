@@ -1,9 +1,8 @@
 package com.gl.module.system.vo;
 
-import org.hibernate.validator.constraints.Email;
+import com.gl.module.system.domain.SysUser.Sex;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 
 /**
  * @author gantrylau
@@ -11,25 +10,17 @@ import org.springframework.validation.Validator;
  */
 public class SysUserForm {
 
+    private Long id;
+
     @NotBlank(message = "用户名不可为空")
+    @Length(min = 5, max = 20, message = "用户名长度为5-20个字符")
     private String username;
 
-    @Email
     private String email;
 
     private String telephone;
 
-    public static class SysUserFormValidator implements Validator {
-        @Override
-        public boolean supports(Class<?> clazz) {
-            return SysUserForm.class.equals(clazz);
-        }
-
-        @Override
-        public void validate(Object target, Errors errors) {
-            SysUserForm form = (SysUserForm) target;
-        }
-    }
+    private Sex sex;
 
     public String getUsername() {
         return username;
@@ -53,5 +44,21 @@ public class SysUserForm {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

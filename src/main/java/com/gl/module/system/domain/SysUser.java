@@ -31,7 +31,7 @@ public class SysUser extends IdEntity<Long> {
 
     private Sex sex;
 
-    enum Sex {
+    public enum Sex {
         Man,
         Woman
     }
