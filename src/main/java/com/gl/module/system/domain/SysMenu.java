@@ -2,7 +2,6 @@ package com.gl.module.system.domain;
 
 import com.gl.infra.spring.data.domain.IdEntity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -21,8 +20,6 @@ public class SysMenu extends IdEntity<Long> {
     private Integer sort;
 
     private String parentAlias;
-
-    private boolean leaf;
 
     public String getName() {
         return name;
@@ -54,14 +51,5 @@ public class SysMenu extends IdEntity<Long> {
 
     public void setParentAlias(String parentAlias) {
         this.parentAlias = parentAlias;
-    }
-
-    @Column(name = "is_leaf", nullable = false)
-    public boolean isLeaf() {
-        return leaf;
-    }
-
-    public void setLeaf(boolean leaf) {
-        this.leaf = leaf;
     }
 }
